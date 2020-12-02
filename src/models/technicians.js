@@ -3,13 +3,13 @@ module.exports = mongoose => {
         "technicians",
         mongoose.Schema(
             {
-                id_technician: Number,      
+                id_technicians: Number,      
                 rol: String,
                 email: String,
                 fullname: String,
                 phone: Number,
                 address: String,
-                boiler: [],
+                boilers: [],
                 capabilities: [],
                 hour_rate: Number,
                 daily_capacity: Number

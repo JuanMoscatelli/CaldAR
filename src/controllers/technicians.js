@@ -3,9 +3,9 @@ const Technicians = db.technicians;
 
 //Create and save a new technician
 exports.create = (req, res) => {
-    const technician = new technician({
-        id_technician: req.body.id_technician,
-        roll: req.body.roll,
+    const technicians = new Technicians({
+        id_technicians: req.body.id_technicians,
+        rol: req.body.rol,
         email: req.body.email,
         fullname: req.body.fullname,
         phone: req.body.phone,
@@ -15,8 +15,8 @@ exports.create = (req, res) => {
         hour_rate: req.body.hour_rate,
         daily_capacity: req.body.daily_capacity,
     });
-    technician
-        .save(technician)
+    technicians
+        .save(technicians)
         .then(data => {
             res.send(data);
         })
@@ -43,11 +43,11 @@ exports.findAll = (req, res) => {
 };
 //Find a single technician with an id
 exports.findOne = (req, res) => {
-    Technicians.findOne({id: req.params.id_technician})
+    Technicians.findOne({id_technicians: req.params.id})
     .then(data => {
         if (!data) {
             return res.status(404).send({
-                message: `Technicians with id ${req.params.id_technician} was not found.`
+                message: `Technicians with id ${req.params.id} was not found.`
             })
         }
         res.send(data);
@@ -60,34 +60,28 @@ exports.findOne = (req, res) => {
     });
 };
 //Update a technician by the id 
+
 exports.update = (req, res) => {
-    if (!req.body) {
-        return res.status(400).send({
-            message: "Data to update can not be empty."
-        });
+    if(!req.body.id_technicians || !req.body.rol || !req.body.email || !req.body.address || !req.body.fullname || !req.body.phone || !req.body.boilers || !req.body.capabilities || !req.body.hour_rate || !req.body.daily_capacity){
+      return res.status(400).send({
+        message: `Content cannot be empty!`
+      })
     }
-    if (!req.body.id_technician || !req.body.roll || !req.body.email || !req.body.fullname || !req.body.phone || !req.body.boilers || !req.body.capabilities || !req.body.address || !req.body.hour_rate || !req.body.daily_capacity) {
-        res.status(400).send({message: "Content can not be empty."});
-    }
-    const id = req.params.id_technician;
-    Technicians.findOneAndUpdate({id}, req.body, { useFindAndModify: false})
-        .then(data => {
-            if(!data) {
-                res.status(404).send({
-                    message: `Cannot update Technician with id ${id}.`
-                });
-            } else res.send({message: 'Technician was update successfully.'});
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || 'Some error occurred while updating technician.'
-            });
-        });
-};
+    Technicians.findOneAndUpdate({id_technicians: req.body.id_technicians}, req.body, {useFindAndModify: false})
+    .then(data => 
+      res.send({message: `Technician was updated`})
+    )
+    .catch(err => {
+      res.status(500).send({
+        message:
+        err.message || "Some error occurred while updating technician."
+      });
+    });
+  };
+  
 //Delete a technician with the specified id
 exports.delete = (req, res) => {
-    const id = req.params.id_technician;
+    const id = req.params.id_technicians;
     Technicians.findOneAndRemove({id}, {useFindAndModify: false})
     .then(data =>
         res.send({ message: "Technician was remove successfully"})
