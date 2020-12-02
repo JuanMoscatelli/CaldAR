@@ -10,7 +10,7 @@ module.exports = mongoose => {
                 fiscal_address: String,
                 id_user: Number,
             },
-            { timestamps: true},
+            {timestamps: true},
         )
     )
     return constructionCompany
