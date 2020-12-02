@@ -1,18 +1,19 @@
 const db = require('../models');
 const constructionCompany = db.constructionCompany;
 
+//Create a new Construction Company
 exports.create = (req, res) => {
   if(!req.body.id_company || !req.body.cuit || !req.body.email || !req.body.id_building || !req.body.fiscal_address || !req.body.id_user) {
     res.status(400).send({ message: 'Content can not be empty!'});
     return;
   }
   const constructionCompany = new constructionCompany({
-    id: req.body.id_company,
-    name: req.body.cuit,
+    id_company: req.body.id_company,
+    cuit: req.body.cuit,
     email: req.body.email,
-    hourRate: req.body.id_building,
-    typeBoilers: req.body.fiscal_address,
-    dailyCapacity: req.body.id_user,
+    id_building: req.body.id_building,
+    fiscal_address: req.body.fiscal_address,
+    id_user: req.body.id_user,
   });
   constructionCompany
     .save(constructionCompany)
@@ -22,11 +23,12 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || 'Some error ocurred while creating the construction company.'
+          err.message || 'Some error ocurred while creating the Construction Company.'
       });
     });
-}
+};
 
+//Retrieve all Construction Companies from the DB
 exports.findAll = (req, res) => {
   constructionCompany.find({})
     .then(data => {
@@ -35,17 +37,18 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || 'Some error ocurred while retrieving construction companies.'
+          err.message || 'Some error ocurred while retrieving Construction Companies.'
       });
     });
-}
+};
 
+//Find a company by ID
 exports.findOne = (req, res) => {
   constructionCompany.findOne({id: req.params.id_company})
     .then(data => {
       if(!data) {
         return res.status(404).send({
-          message: `Construction company with id ${req.params.id_company} was not found`
+          message: `Construction Company with id ${req.params.id_company} was not found`
         });
       };
       res.send(data);
@@ -53,18 +56,19 @@ exports.findOne = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || 'Some error ocurred while retrieving construction company.'
+          err.message || 'Some error ocurred while retrieving Construction Company.'
       });
     });
-}
+};
 
+//Find a company by an specific property: in this case, by CUIT
 exports.findCuit = (req, res) => {
   const cuit = req.params.cuit;
   constructionCompany.findOne({cuit})
     .then(data => {
       if(!data) {
         return res.status(404).send({
-          message: `Construction company with cuit ${cuit} was not found`
+          message: `Construction Company with cuit ${cuit} was not found`
         });
       };
       res.send(data);
@@ -72,22 +76,24 @@ exports.findCuit = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || 'Some error ocurred while retrieving construction company.'
+          err.message || 'Some error ocurred while retrieving Construction Company.'
       });
     });
 }
 
+//Delete a Construction Company by ID
 exports.delete = (req, res) => {
   const id_company = req.params.id_company;
   constructionCompany.findOneAndRemove({id_company}, {useFindeAndModify: false})
-    .then(data => res.send({message: `Construction company was removed succesfully`}))
+    .then(data => res.send({message: `Construction Company was removed succesfully`}))
     .catch(err => {
       res.status(500).send({
-        message: `Some error ocurred while removing construction company with id = ${id_company}`
+        message: `Some error ocurred while removing Construction Company with id = ${id_company}`
       });
     });
-}
+};
 
+//Update a Construction Company by ID
 exports.update = (req, res) => {
   if(!req.body) {
     return res.status(400).send({
@@ -103,14 +109,14 @@ exports.update = (req, res) => {
     .then(data => {
       if(!data) {
         res.status(404).send({
-          message: `Cannot update construction company with id = ${id_company}. Maybe construction company was not found`
+          message: `Cannot update Construction Company with id = ${id_company}. Maybe Construction Company was not found`
         });
       }
-      else res.send({message: 'Construction company was updated succesfully'});
+      else res.send({message: 'Construction Company was updated succesfully'});
     })
     .catch(err => {
       res.status(500).send({
-        message: `Error updating construction company with id = ${id_company}`
+        message: `Error updating Construction Company with id = ${id_company}`
       });
     });
 };
