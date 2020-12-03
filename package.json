@@ -1,25 +1,27 @@
 {
-  "name": "caldar",
+  "name": "clase-08",
   "version": "1.0.0",
-  "description": "",
+  "description": "RR Node.js example app",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Briansangermano/CaldAR.git"
+    "url": "git+https://github.com/aquilesmariani/clase-08.git"
   },
-  "keywords": [
-    "26122612colo"
-  ],
-  "author": "Brian Sangermano",
+  "author": "CaldAR",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Briansangermano/CaldAR/issues"
+    "url": "https://github.com/aquilesmariani/clase-08/issues"
   },
-  "homepage": "https://github.com/Briansangermano/CaldAR#readme",
+  "homepage": "https://github.com/aquilesmariani/clase-08#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "lodash.uniq": "^4.5.0",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.10.15"
   }
 }
